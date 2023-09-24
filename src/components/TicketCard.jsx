@@ -1,16 +1,17 @@
-// components/TicketCard.js
 import React from 'react';
-import '../App.css';
+import {
+  Circle
+} from '@mui/icons-material';
 
-function TicketCard({ ticket }) {
+function TicketCard({ ticket}) {
   return (
     <div className="ticket-card">
-      <h3>{ticket.id}</h3>
-      <p>
-        <input type="checkbox"></input>
-        <label>{ticket.title}</label>
-      </p>
-      <p>{ticket.tag[0]}</p>
+      <div className='grey-3'>{ticket.id}</div>
+      <div className='title'>{ticket.title}</div>
+      <div className='grey-3 tag'>
+        <Circle style={{fontSize: '0.8rem', margin: '5px'}}/>
+        {ticket.tag[0]}
+      </div>
     </div>
   );
 }
