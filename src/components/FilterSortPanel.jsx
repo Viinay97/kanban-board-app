@@ -1,9 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TuneIcon from '@mui/icons-material/Tune';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function FilterSortPanel({ groupingOption, setGroupingOption, sortingOption, setSortingOption }) {
   const [isDisplayed, setIsDisplayed] = useState(false);
+
+  const handleGroupingChange = (e) => {
+    const selectedOption = e.target.value;
+    setGroupingOption(selectedOption);
+    localStorage.setItem('groupingOption', selectedOption);
+  };
+  const handleSortingChange = (e) => {
+    const selectedOption = e.target.value;
+    setSortingOption(selectedOption);
+    localStorage.setItem('sortingOption', selectedOption);
+  };
+  useEffect(() => {
+    const savedGroupingOption = localStorage.getItem('groupingOption');
+    const savedSortingOption = localStorage.getItem('sortingOption');
+
+    if (savedGroupingOption) {
+      setGroupingOption(savedGroupingOption);
+    }
+
+    if (savedSortingOption) {
+      setSortingOption(savedSortingOption);
+    }
+  }, []);
+
 
   return (
     <div className="filter-sort-panel">
@@ -22,7 +46,7 @@ function FilterSortPanel({ groupingOption, setGroupingOption, sortingOption, set
             <select
               className='select'
               value={groupingOption}
-              onChange={e => setGroupingOption(e.target.value)}
+              onChange={handleGroupingChange}
             >
               <option value="status">Status</option>
               <option value="userId">User</option>
@@ -34,7 +58,7 @@ function FilterSortPanel({ groupingOption, setGroupingOption, sortingOption, set
             <select
               className='select'
               value={sortingOption}
-              onChange={e => setSortingOption(e.target.value)}
+              onChange={handleSortingChange}
             >
               <option value="priority">Priority</option>
               <option value="title">Title</option>

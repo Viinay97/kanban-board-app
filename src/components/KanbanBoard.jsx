@@ -68,11 +68,16 @@ function KanbanBoard() {
     const statusKeys = ['Backlog', 'Todo', 'In progress', 'Done', 'Cancelled'];
     const priorityKeys = [0, 4, 3, 2, 1];
     const grouped = {};
-    statusKeys.forEach(key => {
-      grouped[key] = [];
-    })
+    if(option === 'status') {
+      statusKeys.forEach(key => {
+        grouped[key] = [];
+      })
+    }
     tickets.forEach(ticket => {
       const key = option === 'userId' ? ticket.user.name : ticket[option];
+      if(!grouped[key]) {
+        grouped[key] = [];
+      }
       grouped[key].push(ticket);
     });
     const groupedArray = Object.entries(grouped).map(([key, value]) => ({
@@ -100,6 +105,7 @@ function KanbanBoard() {
             return 0;
         }),
     }));
+    console.log(groupedTickets);
     return groupedTickets;
   }
   
