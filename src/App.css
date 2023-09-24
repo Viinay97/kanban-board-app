@@ -57,7 +57,7 @@ body {
     background: white;
     padding: 15px;
     height: 40px;
-    width: 100vw;
+    min-width: 1300px;
 }
 
 .icons {
