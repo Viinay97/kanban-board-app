@@ -13,6 +13,8 @@ import {
   SignalCellular4Bar,
   Announcement,
   AccountCircle,
+  CheckCircle,
+  Cancel,
 } from '@mui/icons-material';
 
 function KanbanBoard() {
@@ -25,6 +27,8 @@ function KanbanBoard() {
     ['Backlog', <PendingOutlined className='icons2'/>],
     ['Todo', <CircleOutlined className='icons2'/> ],
     ['In progress', <ContrastOutlined className='icons2 progress'/>],
+    ['Done', <CheckCircle className='icons2 done'/>],
+    ['Cancelled', <Cancel className='icons2'/>],
     ['0', <SignalCellular0Bar className='icons2'/>],
     ['1', <SignalCellular1Bar className='icons2'/>],
     ['2', <SignalCellular3Bar className='icons2'/>],
@@ -61,21 +65,28 @@ function KanbanBoard() {
 
   function groupTicketsByOption(tickets, option) {
     if (!tickets) return [];
+    const statusKeys = ['Backlog', 'Todo', 'In progress', 'Done', 'Cancelled'];
+    const priorityKeys = [0, 4, 3, 2, 1];
     const grouped = {};
+    statusKeys.forEach(key => {
+      grouped[key] = [];
+    })
     tickets.forEach(ticket => {
       const key = option === 'userId' ? ticket.user.name : ticket[option];
-      if (!grouped[key]) {
-        grouped[key] = [];
-      }
       grouped[key].push(ticket);
     });
     const groupedArray = Object.entries(grouped).map(([key, value]) => ({
         key,
         tickets: value,
     }));
+      if (option === 'status') {
+        groupedArray.sort((a, b) => statusKeys.indexOf(a.key) - statusKeys.indexOf(b.key));
+    } else if (option === 'priority') {
+        groupedArray.sort((a, b) => priorityKeys.indexOf(a.key) - priorityKeys.indexOf(b.key));
+    }
     return groupedArray;
   }
-
+  
   function sortTickets(groupedTickets, option) {
     if (!groupedTickets) return [];
     groupedTickets = groupedTickets.map(group => ({
@@ -89,11 +100,9 @@ function KanbanBoard() {
             return 0;
         }),
     }));
-    console.log(groupedTickets);
     return groupedTickets;
   }
   
-
   const groupedTickets = groupTicketsByOption(tickets, groupingOption);
   const sortedTickets = sortTickets(groupedTickets, sortingOption);
 

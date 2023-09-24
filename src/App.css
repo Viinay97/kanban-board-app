@@ -22,6 +22,10 @@ body {
     align-items: center;
 }
 
+.done {
+    color: rgb(105, 118, 233) !important;
+}
+
 .display {
     display: flex;
     align-items: center;
