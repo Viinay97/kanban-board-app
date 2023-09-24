@@ -130,6 +130,11 @@ body {
     align-items: center;
 }
 
+.title-end {
+    display: flex;
+    margin-left: 10px;
+}
+
 .urgent {
     color: rgb(252 120 65);
 }

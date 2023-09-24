@@ -105,7 +105,6 @@ function KanbanBoard() {
             return 0;
         }),
     }));
-    console.log(groupedTickets);
     return groupedTickets;
   }
   
